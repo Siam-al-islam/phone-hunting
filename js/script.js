@@ -27,7 +27,7 @@ const displayPhones = (phones, isShowAll) => {
         alt="Shoes" /></figure>
         <div class="card-body">
             <h2 class="card-title">${phone.phone_name}</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <p></p>
             <div class="card-actions">
                 <button onclick="handleShowDetail('${phone.slug}'); show_details_modal.showModal()" class="btn btn-primary">Show Details</button>
             </div>
