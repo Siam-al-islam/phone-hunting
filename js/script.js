@@ -1,21 +1,24 @@
-const loadPhoneData = async (searchText) => {
+const loadPhoneData = async (searchText, isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data = await res.json();
     const phones = data.data;
-    displayPhones(phones);
+    displayPhones(phones, isShowAll);
 }
 
-const displayPhones = phones => {
+const displayPhones = (phones, isShowAll) => {
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = '';
     const showAllBtn = document.getElementById('showAll');
-    if (phones.length > 12) {
+    if (phones.length > 12 && !isShowAll) {
         showAllBtn.classList.remove('hidden')
     }
     else {
         showAllBtn.classList.add('hidden')
     }
-    phones = phones.slice(0, 11);
+
+    if (!isShowAll) {
+        phones = phones.slice(0, 11);
+    }
     // console.log(phones.length)
     phones.forEach(phone => {
         const phoneCard = document.createElement('div');
@@ -26,8 +29,8 @@ const displayPhones = phones => {
         <div class="card-body">
             <h2 class="card-title">${phone.phone_name}</h2>
             <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
+            <div class="card-actions">
+                <button onclick="" class="btn btn-primary">Show Details</button>
             </div>
         </div>
         `;
@@ -36,12 +39,13 @@ const displayPhones = phones => {
     toggleLoadingSpinner(false);
 }
 
-const handleSearch = () => {
+
+
+const handleSearch = (isShowAll) => {
     const searchField = document.getElementById('search-field');
     toggleLoadingSpinner(true)
     const searchText = searchField.value;
-    console.log(searchText);
-    loadPhoneData(searchText);
+    loadPhoneData(searchText, isShowAll);
     // toggleLoadingSpinner(false)
 }
 
@@ -55,4 +59,6 @@ const toggleLoadingSpinner = (isLoading) => {
     }
 }
 
-loadPhoneData()
+const handleShowAll = () => {
+    handleSearch(true)
+}
